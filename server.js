@@ -1,4 +1,4 @@
-// server.js - ПОВНА ВЕРСІЯ (З Фільтрами та Моторами)
+// server.js - ПОВНА ВЕРСІЯ (Виправлена для тестів)
 const express = require('express');
 const http = require('http');
 const fs = require('fs');
@@ -31,6 +31,7 @@ let dbMemory = loadData();
 console.log(`Database loaded. Records: ${dbMemory.length}`);
 
 // --- MQTT ---
+// Зберігаємо клієнт у змінну, щоб потім експортувати її
 const mqttClient = mqtt.connect('mqtt://test.mosquitto.org');
 let ALARM_THRESHOLD = 500; 
 
@@ -145,8 +146,19 @@ app.post('/api/stats/consumption', (req, res) => {
     res.json({ energy: totalEnergyWh.toFixed(5), count: filteredData.length });
 });
 
-// Експорт app для тестів
-module.exports = app;
+const PORT = process.env.PORT || 3000;
+
+// Ця умова перевіряє: "Файл запущено напряму чи імпортовано в тест?"
 if (require.main === module) {
-    server.listen(3000, () => console.log('Server running on http://localhost:3000'));
+    // Якщо запускаємо сайт вручну -> слухаємо порт
+    server.listen(PORT, () => {
+        console.log(`Server running on http://localhost:${PORT}`);
+    });
 }
+
+// Експортуємо ОБ'ЄКТ, щоб unit.test.js міг взяти 'app', 'server' та 'client'
+module.exports = { 
+    app, 
+    server, 
+    client: mqttClient // Робимо аліас, бо тест шукає змінну 'client'
+};

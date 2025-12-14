@@ -18,14 +18,12 @@ client.on('connect', () => {
         const q6 = Math.sin(timeStep * 2.0) * 266;
 
         // 2. ГЕНЕРУЄМО ПОТУЖНІСТЬ ДЛЯ 6 МОТОРІВ ОКРЕМО
-        // (Це те, чого не вистачало для графіків)
-        const p1 = Math.abs(Math.sin(timeStep) * 50) + Math.random() * 10;
-        const p2 = Math.abs(Math.sin(timeStep * 1.1) * 40) + Math.random() * 8;
-        const p3 = Math.abs(Math.cos(timeStep * 0.9) * 35) + Math.random() * 5;
-        const p4 = Math.abs(Math.sin(timeStep * 2.0) * 20) + Math.random() * 2;
-        const p5 = Math.abs(Math.cos(timeStep * 1.5) * 15) + Math.random() * 2;
-        const p6 = Math.abs(Math.sin(timeStep * 3.0) * 10) + Math.random() * 1;
-
+        const p1 = Math.abs(Math.sin(timeStep) * 50) + Math.random() * 1;
+        const p2 = Math.abs(Math.sin(timeStep * 1.1) * 40) + Math.random() * 1;
+        const p3 = Math.abs(Math.cos(timeStep * 0.9) * 35) + Math.random() * 1;
+        const p4 = Math.abs(Math.sin(timeStep * 2.0) * 20) + Math.random() * 0.5;
+        const p5 = Math.abs(Math.cos(timeStep * 1.5) * 15) + Math.random() * 0.5;
+        const p6 = Math.abs(Math.sin(timeStep * 3.0) * 10) + Math.random() * 0.2;
         // Сумарна потужність
         const totalPower = p1 + p2 + p3 + p4 + p5 + p6 + 10; // +10Вт електроніка
 

@@ -1,133 +1,203 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>PUMA 560 Dark Monitor</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Apache JMeter Dashboard</title>
+
+     <!-- Bootstrap Core CSS -->
+    <link href="sbadmin2-1.0.7/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="sbadmin2-1.0.7/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="sbadmin2-1.0.7/dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Dashboard css -->
+    <link href="content/css/dashboard.css" rel="stylesheet">
+
+    <!-- Table sorter -->
+    <link href="content/css/theme.blue.css" rel="stylesheet">
+
+    <!-- icon -->
+    <link rel="icon" type="image/png" href="content/pages/icon-apache.png" />
+
+    <!-- Custom Fonts -->
+    <link href="sbadmin2-1.0.7/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 </head>
+
 <body>
-
-<div id="loginScreen" class="login-screen">
-    <div class="card p-4" style="width: 350px;">
-        <h3 class="text-center mb-3 text-info">🤖 PUMA 560</h3>
-        <h6 class="text-center text-muted mb-4">Industrial Monitor</h6>
-        <div id="loginError" class="alert alert-danger p-2 mb-3" style="display:none">Помилка входу</div>
-        <input type="text" id="usernameInput" class="form-control mb-3" placeholder="admin">
-        <input type="password" id="passwordInput" class="form-control mb-3" placeholder="admin">
-        <button onclick="attemptLogin()" class="btn btn-info w-100 fw-bold">Увійти</button>
-    </div>
-</div>
-
-<div id="dashboard" class="container-fluid py-3" style="display:none;">
-    <div id="alertBox" class="alert p-2 fw-bold rounded"></div>
-    <div id="forecastBox" class="alert p-2 fw-bold rounded"></div>
-
-    <nav class="navbar navbar-dark bg-dark rounded mb-4 px-4 shadow border border-secondary d-flex justify-content-between">
-        <div class="d-flex align-items-center">
-            <span class="navbar-brand mb-0 h1 fw-bold text-info">🏭 PUMA 560 Dashboard</span>
-            <span class="badge ms-2" id="userRoleBadge"></span>
-        </div>
-        <button onclick="logout()" class="btn btn-outline-danger btn-sm">Вихід</button>
-    </nav>
-
-    <div class="row">
-        <div class="col-lg-3">
-            <div class="card mb-3 border-info">
-                <div class="card-header bg-transparent text-info border-info">⚡ Загальне Споживання</div>
-                <div class="card-body text-center">
-                    <h1 class="display-4 fw-bold text-white" id="livePower">0 W</h1>
-                    <div class="d-flex justify-content-between text-muted">
-                        <span>V: <span id="liveVoltage" class="text-light">0</span> V</span>
-                        <span>I: <span id="liveCurrent" class="text-light">0</span> A</span>
-                    </div>
-                    <div class="mt-2 text-muted small">Status: <span id="systemStatus" class="status-ok">OK</span></div>
+    <div id="wrapper">
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Apache JMeter Dashboard</a>
+            </div>
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li>
+                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="content/pages/OverTime.html">Over Time</a>
+                                </li>
+                                <li>
+                                    <a href="content/pages/Throughput.html">Throughput</a>
+                                </li>
+                                <li>
+                                    <a href="content/pages/ResponseTimes.html">Response Times</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        
+                        <li>
+                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Customs Graphs<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="content/pages/CustomsGraphs.html">Over Time</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
             </div>
-
-            <div class="card mb-3">
-                <div class="card-header d-flex justify-content-between">
-                    <span>🦾 Кути Осей</span>
-                    <span class="badge bg-secondary" id="robotTemp">0°C</span>
-                </div>
-                <div class="card-body p-2 small">
-                    <div class="row g-2">
-                        <div class="col-6"><div class="border border-secondary p-1 rounded">J1: <span id="val_q1" class="text-info">0</span></div></div>
-                        <div class="col-6"><div class="border border-secondary p-1 rounded">J2: <span id="val_q2" class="text-info">0</span></div></div>
-                        <div class="col-6"><div class="border border-secondary p-1 rounded">J3: <span id="val_q3" class="text-info">0</span></div></div>
-                        <div class="col-6"><div class="border border-secondary p-1 rounded">J4: <span id="val_q4" class="text-info">0</span></div></div>
-                        <div class="col-6"><div class="border border-secondary p-1 rounded">J5: <span id="val_q5" class="text-info">0</span></div></div>
-                        <div class="col-6"><div class="border border-secondary p-1 rounded">J6: <span id="val_q6" class="text-info">0</span></div></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card mb-3">
-                <div class="card-header text-info">📊 Аналітика та Звіти</div>
-                <div class="card-body">
-                    <label class="text-muted small">Початок:</label>
-                    <input type="datetime-local" id="startTime" class="form-control form-control-sm mb-2">
-                    
-                    <label class="text-muted small">Кінець:</label>
-                    <input type="datetime-local" id="endTime" class="form-control form-control-sm mb-3">
-                    
-                    <button onclick="calculateEnergy()" class="btn btn-primary btn-sm w-100 mb-2">🔢 Розрахувати</button>
-                    
-                    <div id="calcResult" class="alert alert-dark border border-secondary text-center p-1 mb-2" style="display:none;">
-                        <strong class="text-white"><span id="energyValue">0</span> Wh</strong>
-                        <div class="small text-muted">(Записів: <span id="energyCount">0</span>)</div>
-                    </div>
-
-                    <div class="row g-1">
-                        <div class="col-6">
-                            <button onclick="exportRange('csv')" class="btn btn-outline-success btn-sm w-100" title="Скачати CSV за вибраний період">📥 CSV</button>
+        </nav>
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                     <div class="panel panel-default" >
+                        <div class="panel-heading" style="text-align:center;">
+                           <p class="dashboard-title">Test and Report information</p>
                         </div>
-                        <div class="col-6">
-                            <button onclick="exportRange('json')" class="btn btn-outline-warning btn-sm w-100" title="Скачати JSON за вибраний період">📥 JSON</button>
+                        <div class="panel-body">
+                        <table id="generalInfos" class="table table-bordered table-condensed " >
+                            <tr>
+                                <td>Source file</td>
+                                <td>"result.jtl"</td>
+                            </tr>
+                            <tr>
+                                <td>Start Time</td>
+                                <td>"12/14/25 5:56 PM"</td>
+                            </tr>
+                            <tr>
+                                <td>End Time</td>
+                                <td>"12/14/25 5:56 PM"</td>
+                            </tr>
+                                <tr>
+                                    <td>Filter for display</td>
+                                    <td>""</td>
+                                </tr>
+                        </table>
+                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="panel panel-default" style="text-align:center;">
+                        <div class="panel-heading">
+                           <p class="dashboard-title"><a href="https://en.wikipedia.org/wiki/Apdex" target="_blank">APDEX (Application Performance Index)</a></p>
+                        </div>
+                        <div class="panel-body">
+                            <section id="apdex" class="col-md-12 table-responsive">
+                                <table id="apdexTable" class="table table-bordered table-condensed tablesorter ">
+                                </table>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6" >
+                    <div class="panel panel-default" style="text-align:center;">
+                        <div class="panel-heading">
+                           <p class="dashboard-title">Requests Summary</p>
+                        </div>
+                           <div class="panel-body">
+                            <div class="flot-chart" style="height:200px;">
+                                <div class="flot-chart-content" id="flot-requests-summary" style="height:200px;"/>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div id="adminPanelCard" class="card mb-3 border-warning" style="display:none;">
-                <div class="card-header text-warning">⚙️ Адміністратор</div>
-                <div class="card-body">
-                    <label class="small">Поріг (W)</label>
-                    <div class="input-group input-group-sm">
-                        <input type="number" id="thresholdInput" class="form-control" value="500">
-                        <button onclick="updateThreshold()" class="btn btn-warning">OK</button>
+            <div class="col-lg-12">
+                <div class="panel panel-default" style="text-align:center;">
+                       <div class="panel-heading" >
+                           <p class="dashboard-title">Statistics</p>
+                       </div>
+                <div class="panel-body ">
+                    <section class="col-md-12 table-responsive">
+                        <table id="statisticsTable" class="table table-bordered table-condensed tablesorter " >
+                        </table>
+                    </section>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="panel panel-default" style="text-align:center;">
+                    <div class="panel-heading">
+                        <p class="dashboard-title">Errors</p>
+                    </div>
+                    <div class="panel-body">
+                        <section class="col-md-12 table-responsive">
+                            <table id="errorsTable" class="table table-bordered table-condensed tablesorter ">
+                            </table>
+                        </section>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="panel panel-default" style="text-align:center;">
+                    <div class="panel-heading">
+                        <p class="dashboard-title">Top 5 Errors by sampler</p>
+                    </div>
+                    <div class="panel-body">
+                        <section class="col-md-12 table-responsive">
+                            <table id="top5ErrorsBySamplerTable" class="table table-bordered table-condensed tablesorter ">
+                            </table>
+                        </section>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="col-lg-6">
-            <div class="card h-100">
-                <div class="card-header text-info">📈 Загальна Потужність</div>
-                <div class="card-body">
-                    <canvas id="mainChart"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-3">
-            <div class="card h-100">
-                <div class="card-header text-success">🔋 Деталізація Моторів</div>
-                <div class="card-body p-2" style="overflow-y: auto; max-height: 85vh;">
-                    <div class="mb-2"><small class="text-muted">Motor 1 (Base)</small><canvas id="chartM1" height="80"></canvas></div>
-                    <div class="mb-2"><small class="text-muted">Motor 2 (Shoulder)</small><canvas id="chartM2" height="80"></canvas></div>
-                    <div class="mb-2"><small class="text-muted">Motor 3 (Elbow)</small><canvas id="chartM3" height="80"></canvas></div>
-                    <div class="mb-2"><small class="text-muted">Motor 4 (Wrist 1)</small><canvas id="chartM4" height="80"></canvas></div>
-                    <div class="mb-2"><small class="text-muted">Motor 5 (Wrist 2)</small><canvas id="chartM5" height="80"></canvas></div>
-                    <div class="mb-2"><small class="text-muted">Motor 6 (Flange)</small><canvas id="chartM6" height="80"></canvas></div>
-                </div>
-            </div>
-        </div>
     </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="/socket.io/socket.io.js"></script>
-<script src="script.js"></script>
+    <!-- jQuery -->
+    <script src="sbadmin2-1.0.7/bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="sbadmin2-1.0.7/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="sbadmin2-1.0.7/bower_components/flot/excanvas.min.js"></script>
+    <script src="sbadmin2-1.0.7/bower_components/flot/jquery.flot.js"></script>
+    <script src="sbadmin2-1.0.7/bower_components/flot/jquery.flot.pie.js"></script>
+    <script src="sbadmin2-1.0.7/bower_components/flot/jquery.flot.resize.js"></script>
+    <script src="sbadmin2-1.0.7/bower_components/flot/jquery.flot.time.js"></script>
+    <script src="sbadmin2-1.0.7/bower_components/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>
+    <script src="sbadmin2-1.0.7/bower_components/flot-axislabels/jquery.flot.axislabels.js"></script>
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="sbadmin2-1.0.7/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+    <script src="content/js/dashboard-commons.js"></script>
+    <script src="content/js/dashboard.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="sbadmin2-1.0.7/dist/js/sb-admin-2.js"></script>
+    <script type="text/javascript" src="content/js/jquery.tablesorter.min.js"></script>
+
 </body>
+
 </html>
