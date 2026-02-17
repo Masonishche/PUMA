@@ -1,0 +1,109 @@
+/* --- DARK THEME BASE --- */
+body { 
+    background-color: #121212; 
+    color: #e0e0e0; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    overflow-x: hidden; /* Заборона гориз. скролу сторінки */
+}
+
+/* --- КАРТКИ (CONTAINERS) --- */
+.card { 
+    background-color: #1e1e1e; 
+    border: 1px solid #333; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5); 
+    border-radius: 8px;
+}
+.card-header { 
+    border-bottom: 1px solid #333; 
+    font-weight: 600; 
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* --- ПОЛЯ ВВОДУ (INPUTS) --- */
+.form-control { 
+    background-color: #2d2d2d; 
+    border: 1px solid #444; 
+    color: #fff; 
+}
+.form-control:focus { 
+    background-color: #333; 
+    color: #fff; 
+    border-color: #0d6efd; 
+    box-shadow: 0 0 0 0.25rem rgba(13, 202, 240, 0.25); 
+}
+
+/* --- ЕКРАН ВХОДУ --- */
+.login-screen { 
+    height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    background: radial-gradient(circle at center, #2b2b2b 0%, #000000 100%);
+}
+
+/* --- СПЛИВАЮЧІ ПОВІДОМЛЕННЯ (ALERTS) --- */
+#alertBox {
+    position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+    z-index: 9999; display: none; background-color: #dc3545; color: white;
+    box-shadow: 0 0 20px rgba(220, 53, 69, 0.6);
+    min-width: 300px;
+}
+#forecastBox {
+    position: fixed; top: 80px; left: 50%; transform: translateX(-50%);
+    z-index: 9998; display: none; background-color: #ffc107; color: #000;
+    box-shadow: 0 0 20px rgba(255, 193, 7, 0.6);
+    min-width: 300px;
+}
+
+/* --- СТАТУСИ --- */
+.status-ok { color: #00ff88; text-shadow: 0 0 8px rgba(0, 255, 136, 0.4); }
+.status-danger { color: #ff3333; text-shadow: 0 0 8px rgba(255, 51, 51, 0.6); animation: blink 1s infinite; }
+
+@keyframes blink { 50% { opacity: 0.5; } }
+
+/* --- ДРІБНІ ЕЛЕМЕНТИ --- */
+.data-box {
+    background-color: #252525;
+    border: 1px solid #444;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-family: monospace;
+}
+
+/* --- СКРОЛБАР --- */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #1e1e1e; }
+::-webkit-scrollbar-thumb { background: #444; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #555; }
+
+/* Контейнер для прокрутки списку моторів */
+.scrollable-motors {
+    overflow-y: auto;
+    max-height: 75vh; /* Максимальна висота списку */
+    padding-right: 5px; /* Місце для скролбару */
+}
+
+/* Обгортка для МАЛЕНЬКИХ графіків (моторів) */
+.chart-wrapper-small {
+    position: relative;
+    width: 100%;
+    height: 100px; /* Жорстка висота: графік завжди 100px */
+    overflow: hidden;
+}
+
+/* Обгортка для ГОЛОВНОГО графіка */
+.chart-wrapper-main {
+    position: relative;
+    width: 100%;
+    height: 60vh; /* Головний графік займає 60% висоти екрану */
+    min-height: 300px;
+    overflow: hidden;
+}
+
+/* Додатковий стиль для картки мотора */
+.motor-card {
+    background-color: #262626;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 8px;
+}
